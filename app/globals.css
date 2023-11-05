@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,14 +14,45 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+} */
+
+@layer components {
+  #correct {
+    @apply bg-correct
+  }
+
+  #almost {
+    @apply bg-almost
+  }
+
+  #error {
+    @apply bg-error
+  }
+
+  #invalid {
+    @apply animate-shake animate-twice animate-duration-[225ms] animate-delay-[50ms] animate-normal animate-fill-both
+  }
+
+  #initial {
+    @apply bg-initial
+  }
+
+  .keyboard-row {
+    @apply w-full h-max flex flex-row content-center justify-center items-center justify-items-center text-center my-2
+  }
+  /* .key {
+    @apply cursor-pointer active:bg-[#72808A] p-2 rounded-md mx-1 w-14 h-16 text-center text-[#f8f8ff] bg-initial text-3xl
+  } */
+  #big-key {
+    @apply w-28 text-2xl
+  }
+  #disabled-key {
+    @apply bg-[#16161D]
+  }
 }
 
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: #f8f8ff;
+  background: linear-gradient(180deg, hsla(240, 14%, 10%, 1) 0%, hsla(0, 0%, 12%, 1) 100%);
 }
