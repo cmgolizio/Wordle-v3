@@ -9,10 +9,13 @@ const Key = ({ keyVal, bigKey, disabled }) => {
   const selectLetter = (e) => {
     e.preventDefault();
     if (keyVal === "ENTER") {
+      console.log("ENTER: ", keyVal);
       onEnter();
     } else if (keyVal === "DELETE") {
+      console.log("DELETE: ", keyVal);
       onDelete();
     } else {
+      console.log("KEY VAL: ", keyVal);
       onSelectLetter(keyVal);
     }
   };

@@ -4,14 +4,8 @@ import React, { useContext, useEffect } from "react";
 import { GameContext } from "@/context/GameContext";
 
 const GamePiece = ({ letterPos, attemptVal }) => {
-  const {
-    board,
-    setBoard,
-    wordle,
-    currentLine,
-    wordIsValid,
-    setDisabledLetters,
-  } = useContext(GameContext);
+  const { board, wordle, currentLine, wordIsValid, setDisabledLetters } =
+    useContext(GameContext);
 
   const letter = board[attemptVal][letterPos];
   const correct = wordle && wordle[letterPos] === letter;

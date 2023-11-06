@@ -27,7 +27,7 @@ const Keyboard = () => {
     (event) => {
       if (gameOver.gameOver) return;
       if (event.key === "Enter") {
-        onEnter();
+        return onEnter();
       } else if (event.key === "Backspace") {
         onDelete();
       } else {
@@ -50,9 +50,17 @@ const Keyboard = () => {
         });
       }
     },
-    // [keysRow1, keysRow2, keysRow3, onSelectLetter, onEnter, onDelete]
+    [
+      gameOver.gameOver,
+      onEnter,
+      onDelete,
+      keysRow1,
+      keysRow2,
+      keysRow3,
+      onSelectLetter,
+    ]
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentLine]
+    // [currentLine]
   );
 
   useEffect(() => {

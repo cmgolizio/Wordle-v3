@@ -1,7 +1,7 @@
 import GameProvider from "@/context/GameContext";
 import GameBoard from "@/components/GameBoard";
 import Keyboard from "@/components/Keyboard";
-import Modal from "@/components/Modal";
+import Modal from "@/components/displays/Modal";
 
 export default function Home() {
   return (
