@@ -3,8 +3,7 @@ import React, { useState, createContext, useEffect } from "react";
 
 import { validateWord } from "@/axios/validateWord";
 import { getNewWordle } from "@/axios/getNewWordle";
-
-export const GameContext = createContext();
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const initialBoard = [
   ["", "", "", "", ""],
@@ -14,6 +13,15 @@ const initialBoard = [
   ["", "", "", "", ""],
   ["", "", "", "", ""],
 ];
+
+const initialStats = {
+  played: 0,
+  wins: 0,
+  streak: 0,
+  percentage: 0,
+};
+
+export const GameContext = createContext();
 
 const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(initialBoard);
@@ -30,6 +38,12 @@ const GameProvider = ({ children }) => {
   const [wordle, setWordle] = useState("");
   const [gameBanner, setGameBanner] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [stats, setStats] = useLocalStorage("wordle-stats", initialStats);
+
+  const getWinPercentage = (totalPlayed, wins) => {
+    const winPercentage = (wins / totalPlayed) * 100;
+    return parseFloat(winPercentage.toFixed(1));
+  };
 
   const onSelectLetter = (keyVal) => {
     if (currentLine.letterPos > 4) return;
@@ -63,20 +77,26 @@ const GameProvider = ({ children }) => {
     }
     const newBoard = [...board];
     const guess = newBoard[currentLine.attempt].join("").toUpperCase();
-    // const guess = newBoard[currentLine.attempt]
-    //   .map((letter) => letter)
-    //   .join("")
-    //   .toUpperCase();
     const isValid = await validateWord(guess);
     setWordIsValid(isValid);
-    console.log("WORD IS VALID: ", wordIsValid);
-    // if (wordIsValid !== null) {
     if (isValid !== "Success") {
-      return setGameBanner("Word not found!");
+      setGameBanner("Word not found!");
     } else {
       if (wordle.toUpperCase() === guess) {
         setCurrentLine({ attempt: currentLine.attempt + 1, letterPos: 0 });
         setGameBanner("You win!");
+        setStats((prev) => {
+          const winPercentage = getWinPercentage(
+            prev.played + 1,
+            prev.wins + 1
+          );
+          return {
+            played: prev.played + 1,
+            wins: prev.wins + 1,
+            streak: prev.streak + 1,
+            percentage: winPercentage,
+          };
+        });
         return setTimeout(() => {
           setGameOver((prev) => {
             return {
@@ -89,6 +109,15 @@ const GameProvider = ({ children }) => {
       } else {
         if (currentLine.attempt === 5) {
           setGameBanner("Ruh roh! Loser.");
+          setStats((prev) => {
+            const winPercentage = getWinPercentage(prev.played + 1, prev.wins);
+            return {
+              ...prev,
+              played: prev.played + 1,
+              streak: 0,
+              percentage: winPercentage,
+            };
+          });
           return setTimeout(() => {
             setGameOver((prev) => {
               return {
@@ -112,10 +141,12 @@ const GameProvider = ({ children }) => {
   };
 
   const handleNewWordle = async () => {
+    setIsLoading(true);
     const newWordle = await getNewWordle();
     const checkWordle = await validateWord(newWordle);
     if (checkWordle === "Success") {
-      return setWordle(newWordle);
+      setWordle(newWordle);
+      return setIsLoading(false);
     } else {
       return handleNewWordle();
     }
@@ -123,6 +154,7 @@ const GameProvider = ({ children }) => {
 
   useEffect(() => {
     return () => handleNewWordle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -172,6 +204,7 @@ const GameProvider = ({ children }) => {
         gameBanner,
         setGameBanner,
         isLoading,
+        stats,
         setIsLoading,
         onSelectLetter,
         onDelete,
