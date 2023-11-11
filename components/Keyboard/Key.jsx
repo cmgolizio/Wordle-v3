@@ -23,7 +23,7 @@ const Key = ({ keyVal, bigKey, disabled }) => {
   return (
     <div
       onClick={(e) => selectLetter(e)}
-      className='cursor-pointer active:bg-[#72808A] p-2 rounded-md mx-1 w-14 h-16 text-center text-[#f8f8ff] bg-initial text-3xl'
+      className='cursor-pointer active:bg-[#72808A] p-2 rounded-md mx-0.5 w-7 h-14 text-center text-[#f8f8ff] bg-initial text-2xl flex content-center justify-center md:w-14 md:h-16 md:text-3xl md:mx-1'
       id={bigKey ? "big-key" : disabled ? "disabled-key" : null}
     >
       {keyVal}

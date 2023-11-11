@@ -22,6 +22,10 @@ module.exports = {
         initial: "#91A3B0",
         // initial: "#2F4F4F",
       },
+      animation: {
+        "flip-reveal":
+          "animate-rotate-x animate-once animate-duration-[225ms] animate-delay-[50ms] animate-ease-linear animate-normal animate-fill-forwards",
+      },
     },
   },
   plugins: [require("tailwindcss-animated")],

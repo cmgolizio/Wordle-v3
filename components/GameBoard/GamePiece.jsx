@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 
 import { GameContext } from "@/context/GameContext";
 
@@ -13,6 +13,14 @@ const GamePiece = ({ letterPos, attemptVal }) => {
   const letterState =
     currentLine.attempt > attemptVal &&
     (correct ? "correct" : almost ? "almost" : "error");
+  // const wordleArrRef = useRef(wordle.split(''));
+  // const letterState = () => {
+  //   const wordleArr = [...wordleArrRef.current];
+  //   const letter = board[attemptVal][letterPos];
+  //   const correct = wordle && wordle[letterPos] === letter;
+  //   const almost = wordle && !correct && letter !== "" && wordleArr.includes(letter);
+  //   const result = currentLine.attempt > attemptVal && (correct ? "correct" : almost ? "almost" : "error");
+  // };
 
   useEffect(() => {
     if (letter !== "" && !correct && !almost) {
