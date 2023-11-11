@@ -153,7 +153,7 @@ const GameProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    return () => handleNewWordle();
+    handleNewWordle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
