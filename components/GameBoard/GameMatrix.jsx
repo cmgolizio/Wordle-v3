@@ -10,7 +10,7 @@ const GameMatrix = () => {
   const { gameBanner } = useContext(GameContext);
   return (
     // <div className='h-[450px] w-[350px] md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-center mb-3 mt-5'>
-    <div className='h-3/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-center mb-3 mt-14'>
+    <div className='h-4/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-center mb-3 mt-5'>
       {" "}
       {gameBanner ? <Banner gameBanner={gameBanner} /> : null}
       <Row>
