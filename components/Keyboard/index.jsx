@@ -72,7 +72,8 @@ const Keyboard = () => {
   }, [handleKeyboard]);
   return (
     <div
-      className='h-1/3 min-w-[350px] w-[350px] px-24 pb-20'
+      // className='h-1/3 min-w-[350px] w-[350px] px-24 pb-20  '
+      className='h-2/5 min-w-full w-full'
       onKeyDown={handleKeyboard}
     >
       <div className='keyboard-row'>
