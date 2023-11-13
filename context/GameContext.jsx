@@ -154,14 +154,13 @@ const GameProvider = ({ children }) => {
   }, [gameBanner]);
 
   const handleReset = () => {
-    // const oldBoard = [...board];
-    // oldBoard.map((row) => {
-    //   for (let i = 0; i < row.length; i++) {
-    //     row[i] = "";
-    //   }
-    //   return row;
-    // });
-    setBoard(initialBoard);
+    const oldBoard = [...board];
+    oldBoard.map((row) => {
+      for (let i = 0; i < row.length; i++) {
+        row[i] = "";
+      }
+      return row;
+    });
     setCurrentLine(initialLine);
     setDisabledLetters([]);
     setGameOver(initialGameOver);
