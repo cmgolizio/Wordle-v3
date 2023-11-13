@@ -4,22 +4,12 @@ import React, { useState, createContext, useEffect } from "react";
 import { validateWord } from "@/axios/validateWord";
 import { getNewWordle } from "@/axios/getNewWordle";
 import useLocalStorage from "@/hooks/useLocalStorage";
-
-const initialBoard = [
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-];
-
-const initialStats = {
-  played: 0,
-  wins: 0,
-  streak: 0,
-  percentage: 0,
-};
+import {
+  initialBoard,
+  initialLine,
+  initialGameOver,
+  initialStats,
+} from "@/constants/initialStates";
 
 export const GameContext = createContext();
 
@@ -27,18 +17,12 @@ const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(initialBoard);
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [wordIsValid, setWordIsValid] = useState(null);
-  const [currentLine, setCurrentLine] = useState({
-    attempt: 0,
-    letterPos: 0,
-  });
-  const [gameOver, setGameOver] = useState({
-    gameOver: false,
-    isWinner: false,
-  });
   const [wordle, setWordle] = useState("");
+  const [currentLine, setCurrentLine] = useState(initialLine);
   const [gameBanner, setGameBanner] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [gameOver, setGameOver] = useState(initialGameOver);
   const [stats, setStats] = useLocalStorage("wordle-stats", initialStats);
 
   const getWinPercentage = (totalPlayed, wins) => {
@@ -63,6 +47,7 @@ const GameProvider = ({ children }) => {
 
   const onDelete = () => {
     if (currentLine.letterPos === 0) return;
+
     const newBoard = [...board];
     newBoard[currentLine.attempt][currentLine.letterPos - 1] = "";
     setBoard([...newBoard]);
@@ -106,7 +91,7 @@ const GameProvider = ({ children }) => {
               isWinner: true,
             };
           });
-        }, 3000);
+        }, 2500);
       } else {
         if (currentLine.attempt === 5) {
           setGameBanner("Ruh roh! Loser.");
@@ -127,7 +112,7 @@ const GameProvider = ({ children }) => {
                 isWinner: false,
               };
             });
-          }, 3000);
+          }, 2500);
         }
         if (currentLine.attempt < 5) {
           return setCurrentLine((prev) => {
@@ -161,7 +146,7 @@ const GameProvider = ({ children }) => {
   useEffect(() => {
     if (gameBanner === "") return;
 
-    let resetBannerTimer = setTimeout(() => setGameBanner(""), 3000);
+    let resetBannerTimer = setTimeout(() => setGameBanner(""), 2500);
 
     return () => {
       clearTimeout(resetBannerTimer);
@@ -169,16 +154,17 @@ const GameProvider = ({ children }) => {
   }, [gameBanner]);
 
   const handleReset = () => {
-    const oldBoard = [...board];
-    oldBoard.map((row) => {
-      for (let i = 0; i < row.length; i++) {
-        row[i] = "";
-      }
-      return row;
-    });
-    setCurrentLine({ attempt: 0, letterPos: 0 });
+    // const oldBoard = [...board];
+    // oldBoard.map((row) => {
+    //   for (let i = 0; i < row.length; i++) {
+    //     row[i] = "";
+    //   }
+    //   return row;
+    // });
+    setBoard(initialBoard);
+    setCurrentLine(initialLine);
     setDisabledLetters([]);
-    setGameOver({ gameOver: false, isWinner: false });
+    setGameOver(initialGameOver);
     setWordIsValid(null);
     setGameBanner("");
     setShowModal(false);
