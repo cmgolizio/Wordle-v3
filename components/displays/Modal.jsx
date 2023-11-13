@@ -1,24 +1,45 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useLayoutEffect } from "react";
+import Image from "next/image";
 
 import { GameContext } from "@/context/GameContext";
 import Stats from "./Stats";
 
 const Modal = () => {
-  const { gameOver, handleReset, wordle } = useContext(GameContext);
+  const { gameOver, handleReset, wordle, showModal, setShowModal } =
+    useContext(GameContext);
   const showWordle = () => {
     if (gameOver.gameOver && !gameOver.isWinner) {
       return true;
     }
     return false;
   };
-  if (!gameOver.gameOver) {
-    return null;
-  }
+
+  const handleCloseModal = (e) => {
+    e.preventDefault();
+
+    setShowModal(false);
+  };
+
+  useLayoutEffect(() => {
+    if (gameOver.gameOver) {
+      setShowModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameOver.gameOver]);
+
+  // if (!gameOver.gameOver) return null;
+  if (!showModal) return null;
   return (
-    <div className='w-2/5 h-3/5 flex flex-col items-center justify-between bg-slate-900 color-[#f8f8ff] z-20 absolute top-3/5 left-2/5 p-20 mb-16 opacity-[98%] rounded-xl'>
+    <div className='w-full h-3/5 flex flex-col items-center justify-between bg-slate-900 color-[#f8f8ff] z-20 absolute top-3/5 left-2/5 p-20 mb-16 opacity-[98%] rounded-xl px-3'>
+      <button onClick={(e) => handleCloseModal(e)}>
+        <Image src='/x-icon.svg' alt='close button' height={32} width={32} />
+      </button>
       {showWordle() && (
-        <h1 className='text-3xl'>{`The word was: ${wordle}`}</h1>
+        <div className='w-full h-fit flex flex-col content-center justify-center items-center justify-items-center'>
+          <h1 className='text-2xl'>{"The word was: "}</h1>
+          <h1 className='text-3xl text-correct'>{wordle}</h1>
+        </div>
       )}
       <Stats />
       <button

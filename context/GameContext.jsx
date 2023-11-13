@@ -38,6 +38,7 @@ const GameProvider = ({ children }) => {
   const [wordle, setWordle] = useState("");
   const [gameBanner, setGameBanner] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [stats, setStats] = useLocalStorage("wordle-stats", initialStats);
 
   const getWinPercentage = (totalPlayed, wins) => {
@@ -167,10 +168,6 @@ const GameProvider = ({ children }) => {
     };
   }, [gameBanner]);
 
-  // useEffect(() => {
-  //   console.log("WORDLE IS VALID: ", wordIsValid);
-  // }, [wordIsValid]);
-
   const handleReset = () => {
     const oldBoard = [...board];
     oldBoard.map((row) => {
@@ -184,6 +181,7 @@ const GameProvider = ({ children }) => {
     setGameOver({ gameOver: false, isWinner: false });
     setWordIsValid(null);
     setGameBanner("");
+    setShowModal(false);
     handleNewWordle();
   };
   return (
@@ -204,6 +202,8 @@ const GameProvider = ({ children }) => {
         gameBanner,
         setGameBanner,
         isLoading,
+        showModal,
+        setShowModal,
         stats,
         setIsLoading,
         onSelectLetter,
@@ -218,48 +218,3 @@ const GameProvider = ({ children }) => {
 };
 
 export default GameProvider;
-
-// const initialBoard = [
-//   [
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//   ],
-//   [
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//   ],
-//   [
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//   ],
-//   [
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//   ],
-//   [
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//   ],
-//   [
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//     { letter: "", state: "initial" },
-//   ],
-// ];
