@@ -59,8 +59,6 @@ const Keyboard = () => {
       keysRow3,
       onSelectLetter,
     ]
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // [currentLine]
   );
 
   useEffect(() => {
@@ -71,11 +69,7 @@ const Keyboard = () => {
     };
   }, [handleKeyboard]);
   return (
-    <div
-      // className='h-1/3 min-w-[350px] w-[350px] px-24 pb-20  '
-      className='h-2/5 min-w-full w-full'
-      onKeyDown={handleKeyboard}
-    >
+    <div className='h-2/5 min-w-full w-full' onKeyDown={handleKeyboard}>
       <div className='keyboard-row'>
         {keysRow1.map((key, i) => (
           <Key key={i} keyVal={key} disabled={disabledLetters.includes(key)} />

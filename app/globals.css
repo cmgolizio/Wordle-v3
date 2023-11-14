@@ -46,7 +46,7 @@
     @apply outline-none
   }
   #big-key {
-    @apply w-fit md:text-2xl grow-0
+    @apply w-fit md:text-2xl grow-0 flex-none
   }
   #disabled-key {
     @apply bg-error
