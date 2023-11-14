@@ -10,7 +10,7 @@ const GameMatrix = () => {
   const { gameBanner, gameOver, showModal, handleReset } =
     useContext(GameContext);
   return (
-    <div className='h-4/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-center mb-3 mt-4'>
+    <div className='h-4/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-center mb-2 mt-0.5'>
       {" "}
       {gameBanner ? <Banner gameBanner={gameBanner} /> : null}
       {gameOver.gameOver && !showModal ? (

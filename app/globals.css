@@ -17,6 +17,7 @@
 } */
 
 @layer components {
+  /* GAME PIECE */
   #correct {
     @apply bg-correct animate-flip-reveal
   }
@@ -37,17 +38,15 @@
     @apply bg-initial
   }
 
+  /* KEYBOARD */
   .keyboard-row {
     @apply w-full min-w-full h-max flex flex-row content-center justify-center items-center justify-items-center text-center my-1
   }
   .keyboard-row:focus-visible {
     @apply outline-none
   }
-  /* .key {
-    @apply cursor-pointer active:bg-[#72808A] p-2 rounded-md mx-1 w-14 h-16 text-center text-[#f8f8ff] bg-initial text-3xl
-  } */
   #big-key {
-    @apply w-10 md:w-28 text-sm md:text-2xl
+    @apply w-fit md:w-28 text-sm md:text-2xl
   }
   #disabled-key {
     @apply bg-[#16161D]
@@ -57,7 +56,7 @@
 
 body {
   color: #f8f8ff;
-  background: linear-gradient(180deg, hsla(240, 14%, 10%, 1) 0%, hsla(0, 0%, 12%, 1) 100%);
+  background: linear-gradient(180deg, hsla(240, 14%, 10%, 1) 0%, rgb(37, 37, 37) 100%);
   user-select: none;
 }
 

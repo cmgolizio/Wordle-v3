@@ -22,9 +22,9 @@ const Key = ({ keyVal, bigKey, disabled }) => {
   };
 
   return (
-    <div
+    <button
       onClick={(e) => selectLetter(e)}
-      className='cursor-pointer active:bg-[#72808A] active:scale-105 p-1 rounded-md mx-0.5 w-8 h-14 text-center text-[#f8f8ff] bg-initial text-2xl flex content-center justify-center md:w-14 md:h-16 md:text-3xl md:mx-1'
+      className='active:bg-[#5b656d] active:scale-105 p-1 rounded-md mx-0.5 w-8 h-14 text-center text-[#f8f8ff] bg-initial text-2xl flex content-center justify-center md:w-14 md:h-16 md:text-3xl md:mx-1'
       id={bigKey ? "big-key" : disabled ? "disabled-key" : null}
     >
       {keyVal === "DELETE" ? (
@@ -32,21 +32,21 @@ const Key = ({ keyVal, bigKey, disabled }) => {
           src='/backspace-icon.svg'
           alt='icon for backspace key'
           className='h-full w-full'
-          height={32}
-          width={32}
+          height={28}
+          width={28}
         />
       ) : keyVal === "ENTER" ? (
         <Image
           src='/check-icon.svg'
           alt='icon for enter key'
           className='h-full w-full'
-          height={32}
-          width={32}
+          height={28}
+          width={28}
         />
       ) : (
         keyVal
       )}
-    </div>
+    </button>
   );
 };
 
