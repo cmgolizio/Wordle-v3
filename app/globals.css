@@ -51,6 +51,9 @@
   #disabled-key {
     @apply bg-error
   }
+  #normal-key {
+    @apply flex-shrink-0
+  }
 }
 
 

@@ -25,7 +25,7 @@ const Key = ({ keyVal, bigKey, disabled }) => {
     <button
       onClick={(e) => selectLetter(e)}
       className='active:bg-[#5b656d] active:scale-105 p-1 rounded-md mx-0.5 w-8 h-14 text-center text-[#f8f8ff] bg-initial text-2xl flex content-center justify-center md:w-14 md:h-16 md:text-3xl md:mx-1'
-      id={bigKey ? "big-key" : disabled ? "disabled-key" : null}
+      id={bigKey ? "big-key" : disabled ? "disabled-key" : "normal-key"}
     >
       {keyVal === "DELETE" ? (
         <Image
