@@ -31,7 +31,7 @@ const Key = ({ keyVal, bigKey, disabled }) => {
         <Image
           src='/backspace-icon.svg'
           alt='icon for backspace key'
-          className='h-full w-full'
+          className='h-full w-full grow-0'
           height={28}
           width={28}
         />
@@ -39,7 +39,7 @@ const Key = ({ keyVal, bigKey, disabled }) => {
         <Image
           src='/check-icon.svg'
           alt='icon for enter key'
-          className='h-full w-full'
+          className='h-full w-full grow-0'
           height={28}
           width={28}
         />

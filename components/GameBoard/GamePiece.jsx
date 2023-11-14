@@ -23,7 +23,7 @@ const GamePiece = ({ letterPos, attemptVal }) => {
   return (
     <div
       className={
-        "flex-[33%] h-full border-2 border-slate-500 grid place-items-center text-5xl text-[#f8f8ff] font-bold rounded-md m-1  "
+        "flex-[33%] h-full border-2 border-slate-500 grid place-items-center text-5xl text-[#f8f8ff] font-bold rounded-sm m-1  "
       }
       id={`${letterState}`}
     >
