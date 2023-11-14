@@ -40,13 +40,13 @@
 
   /* KEYBOARD */
   .keyboard-row {
-    @apply w-full min-w-full h-max flex flex-row content-center justify-center items-center justify-items-center text-center my-1 shrink-0
+    @apply w-full min-w-full h-max flex flex-row content-center justify-center items-center justify-items-center text-center my-1
   }
   .keyboard-row:focus-visible {
     @apply outline-none
   }
   #big-key {
-    @apply w-fit md:text-2xl grow-0 flex-none
+    @apply w-fit flex-initial
   }
   #disabled-key {
     @apply bg-error
