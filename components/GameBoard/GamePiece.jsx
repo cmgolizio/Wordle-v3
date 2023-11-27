@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useLayoutEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { GameContext } from "@/context/GameContext";
 
@@ -14,7 +14,7 @@ const GamePiece = ({ letterPos, attemptVal }) => {
     currentLine.attempt > attemptVal &&
     (correct ? "correct" : almost ? "almost" : "error");
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (letter !== "" && !correct && !almost) {
       setDisabledLetters((prev) => [...prev, letter]);
     }

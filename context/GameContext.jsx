@@ -1,5 +1,10 @@
 "use client";
-import React, { useState, createContext, useEffect } from "react";
+import React, {
+  useState,
+  createContext,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 
 import { validateWord } from "@/axios/validateWord";
 import { getNewWordle } from "@/axios/getNewWordle";
@@ -18,6 +23,7 @@ const GameProvider = ({ children }) => {
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [wordIsValid, setWordIsValid] = useState(null);
   const [wordle, setWordle] = useState("");
+  const [wordleChars, setWordleChars] = useState([]);
   const [currentLine, setCurrentLine] = useState(initialLine);
   const [gameBanner, setGameBanner] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -143,6 +149,19 @@ const GameProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useLayoutEffect(() => {
+    console.log(wordleChars);
+  }, [wordleChars]);
+
+  useLayoutEffect(() => {
+    if (!wordle) {
+      return;
+    }
+    const word = wordle;
+    const chars = word.split("");
+    setWordleChars(chars);
+  }, [wordle]);
+
   useEffect(() => {
     if (gameBanner === "") return;
 
@@ -152,6 +171,8 @@ const GameProvider = ({ children }) => {
       clearTimeout(resetBannerTimer);
     };
   }, [gameBanner]);
+
+  const toggleModal = () => setShowModal((prev) => !prev);
 
   const handleReset = () => {
     const oldBoard = [...board];
@@ -184,6 +205,8 @@ const GameProvider = ({ children }) => {
         setGameOver,
         wordle,
         setWordle,
+        wordleChars,
+        setWordleChars,
         gameBanner,
         setGameBanner,
         isLoading,
@@ -194,6 +217,7 @@ const GameProvider = ({ children }) => {
         onSelectLetter,
         onDelete,
         onEnter,
+        toggleModal,
         handleReset,
       }}
     >
