@@ -29,6 +29,7 @@ const GameProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [gameOver, setGameOver] = useState(initialGameOver);
+  const [showIntro, setShowIntro] = useState(true);
   const [stats, setStats] = useLocalStorage("wordle-stats", initialStats);
 
   const getWinPercentage = (totalPlayed, wins) => {
@@ -219,6 +220,8 @@ const GameProvider = ({ children }) => {
         onEnter,
         toggleModal,
         handleReset,
+        showIntro,
+        setShowIntro,
       }}
     >
       {children}
