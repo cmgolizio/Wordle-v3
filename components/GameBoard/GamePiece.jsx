@@ -1,10 +1,11 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { GameContext } from "@/context/GameContext";
 
 const GamePiece = ({ letterPos, attemptVal }) => {
+  const [id, setId] = useState("");
   const { board, wordle, currentLine, setDisabledLetters } =
     useContext(GameContext);
 
@@ -22,16 +23,18 @@ const GamePiece = ({ letterPos, attemptVal }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLine.attempt]);
 
-  const delayColorChange = (letterPos, letterState) => {
-    return setTimeout(() => letterState, letterPos * 300);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setId(letterState);
+    }, letterPos * 300);
+
+    return () => clearTimeout(timer);
+  }, [letterPos, letterState]);
 
   return (
     <div
       className={clsx(
-        `flex-[33%] h-full border-2 border-slate-500 grid place-items-center text-5xl text-[#f8f8ff] font-bold rounded-sm m-1 animated transition-colors duration-${
-          letterPos * 300
-        }`,
+        `flex-[33%] h-full border-2 border-slate-500 grid place-items-center text-5xl text-[#f8f8ff] font-bold rounded-sm m-1 animated transition-colors duration-300`,
         {
           "animate-flip-up": letterState,
         }
@@ -40,7 +43,7 @@ const GamePiece = ({ letterPos, attemptVal }) => {
         animationDelay: `${letterPos * 300}ms`,
         animationFillMode: "forwards",
       }}
-      id={`${letterState}`}
+      id={`${id}`}
     >
       {letter}
     </div>

@@ -19,11 +19,11 @@
 @layer components {
   /* GAME PIECE */
   #correct {
-    @apply bg-correct animate-flip
+    @apply bg-correct
   }
 
   #almost {
-    @apply bg-almost animate-flip
+    @apply bg-almost
   }
 
   #error {
