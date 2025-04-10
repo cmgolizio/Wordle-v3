@@ -22,9 +22,15 @@ module.exports = {
         initial: "#91A3B0",
         // initial: "#2F4F4F",
       },
+      keyframes: {
+        flip: {
+          "0%": { transform: "rotateX(0deg)" },
+          "50%": { transform: "rotateX(90deg)" },
+          "100%": { transform: "rotateX(0deg)" },
+        },
+      },
       animation: {
-        "flip-reveal":
-          "animate-rotate-x animate-once animate-duration-[225ms] animate-delay-[50ms] animate-ease-linear animate-normal animate-fill-forwards",
+        flip: "flip 0.6s ease-in-out forwards",
       },
     },
   },

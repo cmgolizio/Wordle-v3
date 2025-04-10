@@ -29,7 +29,7 @@ const GameMatrix = () => {
           </button>
         </div>
       ) : null}
-      <Row>
+      {/* <Row>
         <GamePiece letterPos={0} attemptVal={0} />
         <GamePiece letterPos={1} attemptVal={0} />
         <GamePiece letterPos={2} attemptVal={0} />
@@ -70,7 +70,13 @@ const GameMatrix = () => {
         <GamePiece letterPos={2} attemptVal={5} />
         <GamePiece letterPos={3} attemptVal={5} />
         <GamePiece letterPos={4} attemptVal={5} />
-      </Row>
+      </Row> */}
+      <Row attemptVal={0} />
+      <Row attemptVal={1} />
+      <Row attemptVal={2} />
+      <Row attemptVal={3} />
+      <Row attemptVal={4} />
+      <Row attemptVal={5} />
     </div>
   );
 };

@@ -15,11 +15,11 @@ const GameBoard = () => {
   ) : isLoading ? (
     <Loading />
   ) : (
-    <>
+    <div className='flex flex-col justify-center items-center h-full'>
       <Modal />
       <GameMatrix />
       <Keyboard />
-    </>
+    </div>
   );
 };
 

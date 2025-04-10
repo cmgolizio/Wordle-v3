@@ -1,5 +1,6 @@
 "use client";
 import React, { useContext, useEffect } from "react";
+import clsx from "clsx";
 
 import { GameContext } from "@/context/GameContext";
 
@@ -20,11 +21,25 @@ const GamePiece = ({ letterPos, attemptVal }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLine.attempt]);
+
+  const delayColorChange = (letterPos, letterState) => {
+    return setTimeout(() => letterState, letterPos * 300);
+  };
+
   return (
     <div
-      className={
-        "flex-[33%] h-full border-2 border-slate-500 grid place-items-center text-5xl text-[#f8f8ff] font-bold rounded-sm m-1  "
-      }
+      className={clsx(
+        `flex-[33%] h-full border-2 border-slate-500 grid place-items-center text-5xl text-[#f8f8ff] font-bold rounded-sm m-1 animated transition-colors duration-${
+          letterPos * 300
+        }`,
+        {
+          "animate-flip-up": letterState,
+        }
+      )}
+      style={{
+        animationDelay: `${letterPos * 300}ms`,
+        animationFillMode: "forwards",
+      }}
       id={`${letterState}`}
     >
       {letter}
