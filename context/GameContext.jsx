@@ -23,6 +23,8 @@ const GameProvider = ({ children }) => {
   const [disabledLetters, setDisabledLetters] = useState([]);
   const [wordIsValid, setWordIsValid] = useState(null);
   const [wordle, setWordle] = useState("");
+  const [wordleDefinition, setWordleDefinition] = useState("");
+  const [showDefinition, setShowDefinition] = useState(false);
   const [wordleChars, setWordleChars] = useState([]);
   const [currentLine, setCurrentLine] = useState(initialLine);
   const [gameBanner, setGameBanner] = useState("");
@@ -77,7 +79,7 @@ const GameProvider = ({ children }) => {
     } else {
       if (wordle.toUpperCase() === guess) {
         setCurrentLine({ attempt: currentLine.attempt + 1, letterPos: 0 });
-        setGameBanner("You win!");
+        setGameBanner("Noice! YOU WIN!");
         setStats((prev) => {
           const winPercentage = getWinPercentage(
             prev.played + 1,
@@ -101,7 +103,7 @@ const GameProvider = ({ children }) => {
         }, 2500);
       } else {
         if (currentLine.attempt === 5) {
-          setGameBanner("Ruh roh! Loser.");
+          setGameBanner("Welp... You're out of guesses so.. you lose!");
           setStats((prev) => {
             const winPercentage = getWinPercentage(prev.played + 1, prev.wins);
             return {
@@ -124,7 +126,7 @@ const GameProvider = ({ children }) => {
         if (currentLine.attempt < 5) {
           return setCurrentLine((prev) => {
             return {
-              attempt: prev.attempt + 1,
+              attempt: prev.attempt++,
               letterPos: 0,
             };
           });
@@ -136,9 +138,10 @@ const GameProvider = ({ children }) => {
   const handleNewWordle = async () => {
     setIsLoading(true);
     const newWordle = await getNewWordle();
-    const checkWordle = await validateWord(newWordle);
+    const checkWordle = await validateWord(newWordle?.word);
     if (checkWordle === "Success") {
-      setWordle(newWordle);
+      setWordle(newWordle?.word);
+      setWordleDefinition(newWordle?.definition);
       return setIsLoading(false);
     } else {
       return handleNewWordle();
@@ -166,7 +169,7 @@ const GameProvider = ({ children }) => {
   useEffect(() => {
     if (gameBanner === "") return;
 
-    let resetBannerTimer = setTimeout(() => setGameBanner(""), 2500);
+    let resetBannerTimer = setTimeout(() => setGameBanner(""), 2000);
 
     return () => {
       clearTimeout(resetBannerTimer);
@@ -206,6 +209,10 @@ const GameProvider = ({ children }) => {
         setGameOver,
         wordle,
         setWordle,
+        wordleDefinition,
+        setWordleDefinition,
+        showDefinition,
+        setShowDefinition,
         wordleChars,
         setWordleChars,
         gameBanner,

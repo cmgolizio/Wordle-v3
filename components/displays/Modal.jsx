@@ -6,8 +6,17 @@ import { GameContext } from "@/context/GameContext";
 import Stats from "./Stats";
 
 const Modal = () => {
-  const { gameOver, handleReset, wordle, showModal, setShowModal } =
-    useContext(GameContext);
+  const {
+    gameOver,
+    handleReset,
+    wordle,
+    showModal,
+    setShowModal,
+    wordleDefinition,
+    showDefinition,
+    setShowDefinition,
+  } = useContext(GameContext);
+
   const showWordle = () => {
     if (gameOver.gameOver && !gameOver.isWinner) {
       return true;
@@ -28,10 +37,18 @@ const Modal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameOver.gameOver]);
 
+  const handleShowDefinition = (e) => {
+    e.preventDefault();
+
+    setShowDefinition((prev) => {
+      return !prev;
+    });
+  };
+
   // if (!gameOver.gameOver) return null;
   if (!showModal) return null;
   return (
-    <div className='w-full h-full flex flex-col items-center justify-between bg-slate-900 color-[#f8f8ff] z-20 absolute top-3/5 left-2/5 p-20 mb-16 opacity-[98%] rounded-xl px-3'>
+    <div className='w-full h-full flex flex-col items-center justify-between bg-slate-900 color-[#f8f8ff] z-20 absolute top-3/5 left-2/5 p-20 mb-16 opacity-[75%] rounded-xl px-3'>
       <button onClick={(e) => handleCloseModal(e)}>
         <Image src='/x-icon.svg' alt='close button' height={32} width={32} />
       </button>
@@ -42,8 +59,19 @@ const Modal = () => {
         </div>
       )}
       <Stats />
+      <div className='w-full h-fit flex flex-col content-center justify-center items-center justify-items-center'>
+        <button
+          className='p-3 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg opacity-100'
+          onClick={handleShowDefinition}
+        >
+          What does this word mean?
+        </button>
+        {showDefinition && (
+          <h1 className='text-2xl'>{`${wordle}: ${wordleDefinition}`}</h1>
+        )}
+      </div>
       <button
-        className='p-3 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg'
+        className='p-3 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg opacity-100'
         onClick={handleReset}
       >
         Play Again

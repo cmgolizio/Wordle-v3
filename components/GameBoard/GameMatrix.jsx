@@ -2,15 +2,29 @@
 import React, { useContext } from "react";
 
 import { GameContext } from "@/context/GameContext";
-import GamePiece from "./GamePiece";
 import Row from "./Row";
 import Banner from "../displays/Banner";
 
 const GameMatrix = () => {
-  const { gameBanner, gameOver, showModal, toggleModal, handleReset } =
-    useContext(GameContext);
-  return (
-    <div className='h-4/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-center mb-2 mt-0.5'>
+  const {
+    gameBanner,
+    gameOver,
+    showModal,
+    toggleModal,
+    handleReset,
+    isLoading,
+  } = useContext(GameContext);
+  return isLoading ? (
+    <div className='h-4/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-centers opacity-20'>
+      <Row attemptVal={0} />
+      <Row attemptVal={1} />
+      <Row attemptVal={2} />
+      <Row attemptVal={3} />
+      <Row attemptVal={4} />
+      <Row attemptVal={5} />
+    </div>
+  ) : (
+    <div className='h-4/5 w-full md:h-[550px] md:w-[450px] border border-[#16161D] flex flex-col justify-centers'>
       {" "}
       {gameBanner ? <Banner gameBanner={gameBanner} /> : null}
       {gameOver.gameOver && !showModal ? (
@@ -29,48 +43,6 @@ const GameMatrix = () => {
           </button>
         </div>
       ) : null}
-      {/* <Row>
-        <GamePiece letterPos={0} attemptVal={0} />
-        <GamePiece letterPos={1} attemptVal={0} />
-        <GamePiece letterPos={2} attemptVal={0} />
-        <GamePiece letterPos={3} attemptVal={0} />
-        <GamePiece letterPos={4} attemptVal={0} />
-      </Row>
-      <Row>
-        <GamePiece letterPos={0} attemptVal={1} />
-        <GamePiece letterPos={1} attemptVal={1} />
-        <GamePiece letterPos={2} attemptVal={1} />
-        <GamePiece letterPos={3} attemptVal={1} />
-        <GamePiece letterPos={4} attemptVal={1} />
-      </Row>
-      <Row>
-        <GamePiece letterPos={0} attemptVal={2} />
-        <GamePiece letterPos={1} attemptVal={2} />
-        <GamePiece letterPos={2} attemptVal={2} />
-        <GamePiece letterPos={3} attemptVal={2} />
-        <GamePiece letterPos={4} attemptVal={2} />
-      </Row>
-      <Row>
-        <GamePiece letterPos={0} attemptVal={3} />
-        <GamePiece letterPos={1} attemptVal={3} />
-        <GamePiece letterPos={2} attemptVal={3} />
-        <GamePiece letterPos={3} attemptVal={3} />
-        <GamePiece letterPos={4} attemptVal={3} />
-      </Row>
-      <Row>
-        <GamePiece letterPos={0} attemptVal={4} />
-        <GamePiece letterPos={1} attemptVal={4} />
-        <GamePiece letterPos={2} attemptVal={4} />
-        <GamePiece letterPos={3} attemptVal={4} />
-        <GamePiece letterPos={4} attemptVal={4} />
-      </Row>
-      <Row>
-        <GamePiece letterPos={0} attemptVal={5} />
-        <GamePiece letterPos={1} attemptVal={5} />
-        <GamePiece letterPos={2} attemptVal={5} />
-        <GamePiece letterPos={3} attemptVal={5} />
-        <GamePiece letterPos={4} attemptVal={5} />
-      </Row> */}
       <Row attemptVal={0} />
       <Row attemptVal={1} />
       <Row attemptVal={2} />

@@ -11,7 +11,7 @@ const Keyboard = () => {
     onDelete,
     disabledLetters,
     gameOver,
-    currentLine,
+    isLoading,
   } = useContext(GameContext);
   const keysRow1 = useMemo(() => {
     return ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
@@ -68,8 +68,31 @@ const Keyboard = () => {
       document.removeEventListener("keydown", handleKeyboard);
     };
   }, [handleKeyboard]);
-  return (
-    <div className='h-2/5 min-w-full w-full' onKeyDown={handleKeyboard}>
+  return isLoading ? (
+    <div
+      className='h-1/5 min-w-full w-full opacity-20'
+      onKeyDown={handleKeyboard}
+    >
+      <div className='keyboard-row'>
+        {keysRow1.map((key, i) => (
+          <Key key={i} keyVal={key} disabled={disabledLetters.includes(key)} />
+        ))}
+      </div>
+      <div className='keyboard-row'>
+        {keysRow2.map((key, i) => (
+          <Key key={i} keyVal={key} disabled={disabledLetters.includes(key)} />
+        ))}
+      </div>
+      <div className='keyboard-row'>
+        <Key keyVal='ENTER' bigKey />
+        {keysRow3.map((key, i) => (
+          <Key key={i} keyVal={key} disabled={disabledLetters.includes(key)} />
+        ))}
+        <Key keyVal='DELETE' bigKey />
+      </div>
+    </div>
+  ) : (
+    <div className='h-1/5 min-w-full w-full' onKeyDown={handleKeyboard}>
       <div className='keyboard-row'>
         {keysRow1.map((key, i) => (
           <Key key={i} keyVal={key} disabled={disabledLetters.includes(key)} />
