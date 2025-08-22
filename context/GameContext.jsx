@@ -82,7 +82,7 @@ const GameProvider = ({ children }) => {
     }
     const newBoard = [...board];
     const guess = newBoard[currentLine.attempt].join("").toUpperCase();
-    const isValid = await validateWord(guess);
+    const isValid = validateWord(guess);
     setWordIsValid(isValid);
     if (isValid !== "Success.") {
       setGameBanner("Word not found!");
@@ -152,7 +152,7 @@ const GameProvider = ({ children }) => {
     const newDefinition = wordleObj?.definition;
     if (newDefinition === undefined) return handleNewWordle();
 
-    const checkWordle = await validateWord(newWordle);
+    const checkWordle = validateWord(newWordle);
     if (checkWordle === "Success.") {
       setWordle(newWordle);
       setWordleDefinition(newDefinition);
@@ -162,9 +162,9 @@ const GameProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    // console.log("SHOW DEFINITION MODAL: ", showDefinitionModal);
-  }, [showDefinitionModal]);
+  // useEffect(() => {
+  //   console.log("SHOW DEFINITION MODAL: ", showDefinitionModal);
+  // }, [showDefinitionModal]);
 
   // useEffect(() => {
   //   handleNewWordle();

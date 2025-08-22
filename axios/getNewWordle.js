@@ -13,7 +13,7 @@ export const getNewWordle = async () => {
 
   try {
     const response = await axios.request(options);
-    // console.log(response.data);
+    console.log(response.data);
     const result = {
       word: response.data.word.toUpperCase(),
       definition: response.data.results[0].definition,
