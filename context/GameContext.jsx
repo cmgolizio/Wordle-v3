@@ -64,6 +64,11 @@ const GameProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    console.log("CURRENT LINE: ", currentLine);
+    console.log("LETTER POS: ", currentLine.letterPos);
+  }, [currentLine]);
+
   const onDelete = () => {
     if (currentLine.letterPos === 0) return;
 
@@ -82,7 +87,7 @@ const GameProvider = ({ children }) => {
     }
     const newBoard = [...board];
     const guess = newBoard[currentLine.attempt].join("").toUpperCase();
-    const isValid = validateWord(guess);
+    const isValid = await validateWord(guess);
     setWordIsValid(isValid);
     if (isValid !== "Success.") {
       setGameBanner("Word not found!");
@@ -131,7 +136,7 @@ const GameProvider = ({ children }) => {
                 isWinner: false,
               };
             });
-          }, 2500);
+          }, 2000);
         }
         if (currentLine.attempt < 5) {
           return setCurrentLine((prev) => {
