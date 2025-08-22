@@ -6,7 +6,7 @@ import React, {
   useLayoutEffect,
 } from "react";
 
-import { validateWord } from "@/axios/validateWord";
+// import { validateWord } from "@/axios/validateWord";
 import { getNewWordle } from "@/axios/getNewWordle";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import {
@@ -25,6 +25,7 @@ const GameProvider = ({ children }) => {
   const [wordle, setWordle] = useState("");
   const [wordleDefinition, setWordleDefinition] = useState("");
   const [showDefinition, setShowDefinition] = useState(false);
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [wordleChars, setWordleChars] = useState([]);
   const [currentLine, setCurrentLine] = useState(initialLine);
   const [gameBanner, setGameBanner] = useState("");
@@ -33,6 +34,15 @@ const GameProvider = ({ children }) => {
   const [gameOver, setGameOver] = useState(initialGameOver);
   const [showIntro, setShowIntro] = useState(true);
   const [stats, setStats] = useLocalStorage("wordle-stats", initialStats);
+
+  const validateWord = (word) => {
+    const validationResults = word
+      ?.split("")
+      .filter((ch) => ch.match(/[a-zA-Z]/))
+      .join("");
+    const res = validationResults === word ? "Success." : "Word not found";
+    return res;
+  };
 
   const getWinPercentage = (totalPlayed, wins) => {
     const winPercentage = (wins / totalPlayed) * 100;
@@ -74,12 +84,12 @@ const GameProvider = ({ children }) => {
     const guess = newBoard[currentLine.attempt].join("").toUpperCase();
     const isValid = await validateWord(guess);
     setWordIsValid(isValid);
-    if (isValid !== "Success") {
+    if (isValid !== "Success.") {
       setGameBanner("Word not found!");
     } else {
       if (wordle.toUpperCase() === guess) {
         setCurrentLine({ attempt: currentLine.attempt + 1, letterPos: 0 });
-        setGameBanner("Noice! YOU WIN!");
+        setGameBanner("Noice! YOU WON!");
         setStats((prev) => {
           const winPercentage = getWinPercentage(
             prev.played + 1,
@@ -137,11 +147,15 @@ const GameProvider = ({ children }) => {
 
   const handleNewWordle = async () => {
     setIsLoading(true);
-    const newWordle = await getNewWordle();
-    const checkWordle = await validateWord(newWordle?.word);
-    if (checkWordle === "Success") {
-      setWordle(newWordle?.word);
-      setWordleDefinition(newWordle?.definition);
+    const wordleObj = await getNewWordle();
+    const newWordle = wordleObj?.word;
+    const newDefinition = wordleObj?.definition;
+    if (newDefinition === undefined) return handleNewWordle();
+
+    const checkWordle = await validateWord(newWordle);
+    if (checkWordle === "Success.") {
+      setWordle(newWordle);
+      setWordleDefinition(newDefinition);
       return setIsLoading(false);
     } else {
       return handleNewWordle();
@@ -149,13 +163,17 @@ const GameProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    handleNewWordle();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // console.log("SHOW DEFINITION MODAL: ", showDefinitionModal);
+  }, [showDefinitionModal]);
 
-  useLayoutEffect(() => {
-    console.log(wordleChars);
-  }, [wordleChars]);
+  // useEffect(() => {
+  //   handleNewWordle();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  // useLayoutEffect(() => {
+  //   console.log(wordleChars);
+  // }, [wordleChars]);
 
   useLayoutEffect(() => {
     if (!wordle) {
@@ -178,6 +196,11 @@ const GameProvider = ({ children }) => {
 
   const toggleModal = () => setShowModal((prev) => !prev);
 
+  const toggleShowDefinition = () => setShowDefinition((prev) => !prev);
+
+  const toggleShowDefinitionModal = () =>
+    setShowDefinitionModal((prev) => !prev);
+
   const handleReset = () => {
     const oldBoard = [...board];
     oldBoard.map((row) => {
@@ -192,6 +215,8 @@ const GameProvider = ({ children }) => {
     setWordIsValid(null);
     setGameBanner("");
     setShowModal(false);
+    setShowDefinition(false);
+    setShowDefinitionModal(false);
     handleNewWordle();
   };
   return (
@@ -207,12 +232,15 @@ const GameProvider = ({ children }) => {
         setCurrentLine,
         gameOver,
         setGameOver,
+        handleNewWordle,
         wordle,
         setWordle,
         wordleDefinition,
         setWordleDefinition,
         showDefinition,
-        setShowDefinition,
+        toggleShowDefinition,
+        showDefinitionModal,
+        toggleShowDefinitionModal,
         wordleChars,
         setWordleChars,
         gameBanner,

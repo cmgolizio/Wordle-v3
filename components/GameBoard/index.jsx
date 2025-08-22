@@ -7,6 +7,7 @@ import GameMatrix from "./GameMatrix";
 import Keyboard from "../Keyboard";
 import Loading from "../displays/Loading";
 import Intro from "../displays/Intro";
+import DefinitionMiniModal from "../displays/DefinitionMiniModal";
 
 const GameBoard = () => {
   const { isLoading, showIntro } = useContext(GameContext);
@@ -16,6 +17,7 @@ const GameBoard = () => {
     <div className='flex flex-col justify-center items-center h-full'>
       {isLoading && <Loading />}
       <Modal />
+      <DefinitionMiniModal />
       <GameMatrix />
       <Keyboard />
     </div>

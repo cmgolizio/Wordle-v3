@@ -11,6 +11,7 @@ const GameMatrix = () => {
     gameOver,
     showModal,
     toggleModal,
+    toggleShowDefinitionModal,
     handleReset,
     isLoading,
   } = useContext(GameContext);
@@ -40,6 +41,12 @@ const GameMatrix = () => {
             onClick={handleReset}
           >
             Play Again
+          </button>
+          <button
+            className='p-3 mb-4 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg self-center'
+            onClick={toggleShowDefinitionModal}
+          >
+            Definition
           </button>
         </div>
       ) : null}

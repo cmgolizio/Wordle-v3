@@ -14,7 +14,7 @@ const Modal = () => {
     setShowModal,
     wordleDefinition,
     showDefinition,
-    setShowDefinition,
+    toggleShowDefinition,
   } = useContext(GameContext);
 
   const showWordle = () => {
@@ -37,14 +37,6 @@ const Modal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameOver.gameOver]);
 
-  const handleShowDefinition = (e) => {
-    e.preventDefault();
-
-    setShowDefinition((prev) => {
-      return !prev;
-    });
-  };
-
   // if (!gameOver.gameOver) return null;
   if (!showModal) return null;
   return (
@@ -59,17 +51,19 @@ const Modal = () => {
         </div>
       )}
       <Stats />
-      <div className='w-full h-fit flex flex-col content-center justify-center items-center justify-items-center'>
-        <button
-          className='p-3 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg opacity-100'
-          onClick={handleShowDefinition}
-        >
-          What does this word mean?
-        </button>
-        {showDefinition && (
-          <h1 className='text-2xl'>{`${wordle}: ${wordleDefinition}`}</h1>
-        )}
-      </div>
+      {wordleDefinition && (
+        <div className='w-full h-fit flex flex-col content-center justify-center items-center justify-items-center'>
+          <button
+            className='p-3 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg opacity-100'
+            onClick={toggleShowDefinition}
+          >
+            Definition
+          </button>
+          {showDefinition && (
+            <h1 className='text-2xl text-center'>{`${wordle}: ${wordleDefinition}`}</h1>
+          )}
+        </div>
+      )}
       <button
         className='p-3 rounded-xl bg-slate-400 color-[#16161D] hover:scale-105 hover:bg-slate-500 active:scale-100 active:bg-slate-700 h-auto text-lg opacity-100'
         onClick={handleReset}
