@@ -115,7 +115,7 @@ const GameProvider = ({ children }) => {
               isWinner: true,
             };
           });
-        }, 2500);
+        }, 2000);
       } else {
         if (currentLine.attempt === 5) {
           setGameBanner("Welp... You're out of guesses so.. you lose!");
@@ -141,7 +141,7 @@ const GameProvider = ({ children }) => {
         if (currentLine.attempt < 5) {
           return setCurrentLine((prev) => {
             return {
-              attempt: prev.attempt++,
+              attempt: prev.attempt + 1,
               letterPos: 0,
             };
           });
